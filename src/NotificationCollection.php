@@ -1,8 +1,6 @@
 <?php
 namespace Xqddd\Notifications;
 
-use Xqddd\Notifications\Exceptions\InvalidNotificationLabelException;
-
 /**
  * Notification collection class
  *
@@ -13,22 +11,24 @@ class NotificationCollection extends \ArrayObject implements Presentable
 {
 
 	/**
+	 * Check if a notification exists
+	 *
+	 * @param $label
+	 * @return bool
+	 */
+	public function exists($label)
+	{
+		return $this->offsetExists($label);
+	}
+
+	/**
 	 * Get a notification by label
 	 *
 	 * @param string $label
-	 * @return mixed
-	 * @throws InvalidNotificationLabelException
+	 * @return Notification|false
 	 */
-	public function getNotification($label)
+	public function get($label)
 	{
-		if (!is_string($label)) {
-            throw new InvalidNotificationLabelException(
-				'label',
-				'string',
-				gettype($label)
-			);
-		}
-
 		return $this->offsetGet($label);
 	}
 
@@ -37,7 +37,7 @@ class NotificationCollection extends \ArrayObject implements Presentable
 	 *
 	 * @param NotificationInterface $Notification
 	 */
-	public function addNotification(NotificationInterface $Notification)
+	public function add(NotificationInterface $Notification)
 	{
 		if ($Notification->getLabel() !== null) {
 			$this->offsetSet($Notification->getLabel(), $Notification);
@@ -47,17 +47,25 @@ class NotificationCollection extends \ArrayObject implements Presentable
 	}
 
 	/**
+	 * Add multiple notifications from another collection
+	 *
+	 * @param NotificationCollection $NotificationCollection
+	 */
+	public function addMany(NotificationCollection $NotificationCollection)
+	{
+		foreach ($NotificationCollection as $Notification) {
+			$this->add($Notification);
+		}
+	}
+
+	/**
 	 * Verify if there are any notifications
 	 *
 	 * @return boolean
 	 */
-	public function hasNotifications()
+	public function hasAny()
 	{
-		if ($this->count() > 0) {
-			return true;
-		}
-
-		return false;
+		return ($this->count() > 0);
 	}
 
 	/**
