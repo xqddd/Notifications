@@ -1,10 +1,9 @@
 <?php
-namespace Tests\Notification;
+namespace Tests\Emergency;
 
 use Xqddd\Notifications\Label;
-use Xqddd\Notifications\Type;
 use Xqddd\Notifications\Message;
-use Xqddd\Notifications\Notification;
+use Xqddd\Notifications\Emergency;
 
 class ConstructTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,21 +15,16 @@ class ConstructTest extends \PHPUnit_Framework_TestCase
     {
         $label = new Label('label');
         $message = new Message('message');
-        $type = new Type('type');
 
-        $Notification = new Notification($label, $message, $type);
+        $Emergency = new Emergency($label, $message);
 
         static::assertSame(
             $label,
-            \PHPUnit_Framework_Assert::readAttribute($Notification, 'label')
+            \PHPUnit_Framework_Assert::readAttribute($Emergency, 'label')
         );
         static::assertSame(
             $message,
-            \PHPUnit_Framework_Assert::readAttribute($Notification, 'message')
-        );
-        static::assertSame(
-            $type,
-            \PHPUnit_Framework_Assert::readAttribute($Notification, 'type')
+            \PHPUnit_Framework_Assert::readAttribute($Emergency, 'message')
         );
     }
 
@@ -48,38 +42,26 @@ class ConstructTest extends \PHPUnit_Framework_TestCase
     {
         $label = new Label('label');
         $message = new Message('message');
-        $type = new Type('type');
 
         try {
-            $Notification = new Notification($labelValue, $message, $type);
+            $Emergency = new Emergency($labelValue, $message);
         } catch (\PHPUnit_Framework_Error $e) {
             static::assertStringStartsWith(
-                'Argument 1 passed to Xqddd\Notifications\Notification::__construct() must be an instance of Xqddd\Notifications\Label,',
+                'Argument 1 passed to Xqddd\Notifications\Emergency::__construct() must be an instance of Xqddd\Notifications\Label,',
                 $e->getMessage()
             );
             static::assertEquals(4096, $e->getCode());
         }
 
         try {
-            $Notification = new Notification($label, $messageValue, $type);
+            $Emergency = new Emergency($label, $messageValue);
         } catch (\PHPUnit_Framework_Error $e) {
             static::assertStringStartsWith(
-                'Argument 2 passed to Xqddd\Notifications\Notification::__construct() must be an instance of Xqddd\Notifications\Message,',
+                'Argument 2 passed to Xqddd\Notifications\Emergency::__construct() must be an instance of Xqddd\Notifications\Message,',
                 $e->getMessage()
             );
             static::assertEquals(4096, $e->getCode());
         }
-
-        try {
-            $Notification = new Notification($label, $message, $typeValue);
-        } catch (\PHPUnit_Framework_Error $e) {
-            static::assertStringStartsWith(
-                'Argument 3 passed to Xqddd\Notifications\Notification::__construct() must be an instance of Xqddd\Notifications\Type,',
-                $e->getMessage()
-            );
-            static::assertEquals(4096, $e->getCode());
-        }
-
     }
 
     public function nonStringValues()

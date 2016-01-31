@@ -15,4 +15,8 @@ class Codes extends BaseCodes
     const INVALID_NOTIFICATION_LABEL = 102;
 
     const INVALID_NOTIFICATION_MESSAGE = 202;
+
+    const NOTIFICATION_TYPE_DOMAIN = 301;
+
+    const INVALID_NOTIFICATION_TYPE = 302;
 }

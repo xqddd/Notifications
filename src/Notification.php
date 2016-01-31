@@ -1,50 +1,54 @@
 <?php
 namespace Xqddd\Notifications;
 
-use Xqddd\Notifications\Exceptions\InvalidNotificationLabelException;
-use Xqddd\Notifications\Exceptions\InvalidNotificationMessageException;
-
 /**
  * Notification class
  *
  * @author Andrei Pirjoleanu <andreipirjoleanu@gmail.com>
  * @package Xqddd\Notifications
  */
-class Notification implements NotificationInterface
+class Notification implements NotificationInterface, Presentable
 {
 
     /**
      * The notification label
      *
-     * @var string
+     * @var Label
      */
     protected $label;
 
     /**
      * The notification message
      *
-     * @var string
+     * @var Message
      */
     protected $message;
 
     /**
+     * The notification type
+     *
+     * @var Type
+     */
+    protected $type;
+
+    /**
      * Notification constructor.
      *
-     * @param $message
-     * @param null $label
+     * @param Label $label
+     * @param Type $type
+     * @param Message $message
      */
-    public function __construct($message, $label = null)
+    public function __construct(Label $label, Message $message, Type $type)
     {
-        if (!is_null($label)) {
-            $this->setLabel($label);
-        }
+        $this->setLabel($label);
         $this->setMessage($message);
+        $this->setType($type);
     }
 
     /**
      * Get the notification label
      *
-     * @return string
+     * @return Label
      */
     public function getLabel()
     {
@@ -54,26 +58,18 @@ class Notification implements NotificationInterface
     /**
      * Set the notification label
      *
-     * @param string $label
-     * @throws InvalidNotificationLabelException
+     * @param Label $label
      */
-    protected function setLabel($label)
+    protected function setLabel(Label $label)
     {
-        if (!is_string($label)) {
-            throw new InvalidNotificationLabelException(
-                'label',
-                'string',
-                gettype($label)
-            );
-        }
-
         $this->label = $label;
     }
+
 
     /**
      * Get the notification message
      *
-     * @return string
+     * @return Message
      */
     public function getMessage()
     {
@@ -83,60 +79,125 @@ class Notification implements NotificationInterface
     /**
      * Set the notification message
      *
-     * @param string $message
-     * @throws InvalidNotificationMessageException
+     * @param Message $message
      */
-    protected function setMessage($message)
+    protected function setMessage(Message $message)
     {
-        if (!is_string($message)) {
-            throw new InvalidNotificationMessageException(
-                'message',
-                'string',
-                gettype($message)
-            );
-        }
-
         $this->message = $message;
     }
 
     /**
-     * Get the notification message formatted to string
+     * Get the notification type
+     *
+     * @return Type
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set the notification type
+     *
+     * @param Type $type
+     */
+    protected function setType(Type $type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get the notification formatted as a string
      *
      * @return string
      */
     public function toString()
     {
-        return $this->getMessage();
+        return sprintf(
+            '[%s]: [[%s]] - [%s]',
+            [
+                ucfirst($this->getType()->toString()),
+                $this->getLabel()->toString(),
+                $this->getMessage()->toString()
+            ]
+        );
     }
 
 	/**
+     * Get the notification formatted as an array
+     *
+     * @param bool $assoc
 	 * @return array
 	 */
-    public function toArray()
+    public function toArray($assoc = true)
     {
-        $attribute = [
-            'label' => $this->getLabel(),
-            'message' => $this->getMessage()
-        ];
-
-        return $attribute;
+        return array_merge(
+            $this->getLabel()->toArray($assoc),
+            $this->getMessage()->toArray($assoc),
+            $this->getType()->toArray($assoc)
+        );
     }
 
-	/**
-	 * @param bool $fullStructure
+    /**
+     * Get the notification formatted as a short array
+     *
+     * If associative: [$label => $message]
+     * Else: [$message]
+     *
+     * @param bool $assoc
+     * @return array
+     */
+    public function toShortArray($assoc = true)
+    {
+        if (true === $assoc) {
+            return [
+                $this->getLabel()->toString() => $this->getMessage()->toString()
+            ];
+        } else {
+            return [
+                $this->getMessage()->toString()
+            ];
+        }
+    }
+
+    /**
+     * Get the notification formatted as a custom data structure
+     *
+     * @param string $structure
+     * @param bool $assoc
+     * @return mixed
+     */
+    public function toOutput($structure = 'shortArray', $assoc = true)
+    {
+        switch ($structure) {
+            case 'string':
+                $output = $this->toString();
+                break;
+            case 'array':
+                $output = $this->toArray($assoc);
+                break;
+            case 'shortArray':
+            default:
+                $output = $this->toShortArray($assoc);
+                break;
+        }
+        return $output;
+    }
+
+    /**
+     * Get the notification formatted as a JSON string, by using a custom data structure
+     *
+	 * @param string $structure
+     * @param bool $assoc
+     * @param int $options
 	 * @return string
 	 */
-    public function toJson($fullStructure = false)
+    public function toJson($options = 0, $structure = 'shortArray', $assoc = true)
     {
-        if (true === $fullStructure) {
-            $structure = $this->toArray();
-        } else {
-            $structure = $this->toString();
-        }
-
-        $jsonStructure = json_encode($structure);
-
-        return $jsonStructure;
+        return json_encode(
+            $this->toOutput($structure, $assoc),
+            $options
+        );
     }
 
     public function __toString()

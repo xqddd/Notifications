@@ -18,19 +18,16 @@ interface NotificationInterface
     public function getLabel();
 
     /**
+     * Get the notification type
+     *
+     * @return string
+     */
+    public function getType();
+
+    /**
      * Get the notification message
      *
      * @return string
      */
     public function getMessage();
-
-    /**
-     * Get the notification message formatted to string
-     *
-     * @return string
-     */
-    public function toString();
-
-    public function __toString();
-
 }

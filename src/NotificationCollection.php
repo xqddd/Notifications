@@ -9,7 +9,7 @@ use Xqddd\Notifications\Exceptions\InvalidNotificationLabelException;
  * @author Andrei Pirjoleanu <andreipirjoleanu@gmail.com>
  * @package Xqddd\Notifications
  */
-class NotificationCollection extends \ArrayObject
+class NotificationCollection extends \ArrayObject implements Presentable
 {
 
 	/**
@@ -61,49 +61,99 @@ class NotificationCollection extends \ArrayObject
 	}
 
 	/**
+	 * Get the notifications formatted as a string
 	 *
-	 * @return array
+	 * @return string
 	 */
 	public function toString()
 	{
-		$collection = [];
+		$collectionString = '';
 
-		foreach ($this->getArrayCopy() as $item) {
-			$collection[] = $item->toString();
+		/** @var Notification $item */
+		foreach ($this->getArrayCopy() as $label => $item) {
+			$collectionString .= $item->toString();
+			$collectionString .= PHP_EOL;
 		}
 
-		return $collection;
+		return $collectionString;
 	}
 
 	/**
+	 * Get the notifications formatted as an array
 	 *
+	 * @param bool $assoc
 	 * @return array
 	 */
-	public function toArray()
+	public function toArray($assoc = true)
 	{
 		$collection = [];
 
-		foreach ($this->getArrayCopy() as $item) {
-			$collection[] = $item->toArray();
+		/** @var Notification $item */
+		foreach ($this->getArrayCopy() as $label => $item) {
+			$collection[$label] = $item->toArray($assoc);
 		}
 
 		return $collection;
 	}
 
 	/**
+	 * Get the notifications formatted as a short array
 	 *
-	 * @param boolean $fullStructure
-	 * @return string
+	 * @param bool $assoc
+	 * @return array
 	 */
-	public function toJson($fullStructure = true)
+	public function toShortArray($assoc = true)
 	{
 		$collection = [];
 
-		foreach ($this->getArrayCopy() as $item) {
-			$collection[] = json_decode($item->toJson($fullStructure));
+		/** @var Notification $item */
+		foreach ($this->getArrayCopy() as $label => $item) {
+			$collection[$label] = $item->toShortArray($assoc);
 		}
 
-		return json_encode($collection);
+		return $collection;
 	}
 
+	/**
+	 * Get the notifications formatted as a custom data structure
+	 *
+	 * @param string $structure
+	 * @param bool $assoc
+	 * @return mixed
+	 */
+	public function toOutput($structure = 'shortArray', $assoc = true)
+	{
+		switch ($structure) {
+			case 'string':
+				$output = $this->toString();
+				break;
+			case 'array':
+				$output = $this->toArray($assoc);
+				break;
+			case 'shortArray':
+			default:
+				$output = $this->toShortArray($assoc);
+				break;
+		}
+		return $output;
+	}
+
+	/**
+	 * @param int $options
+	 * @param string $structure
+	 * @param bool $assoc
+	 * @return string
+	 */
+	public function toJson($options = 0, $structure = 'shortArray', $assoc = true)
+	{
+		return json_encode(
+			$this->toOutput($structure, $assoc),
+			$options
+		);
+	}
+
+	public function __toString()
+	{
+		return $this->toString();
+	}
 }
