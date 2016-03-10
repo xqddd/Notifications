@@ -84,9 +84,9 @@ class Context implements Presentable
      */
     public function toString()
     {
-        return ($this->value instanceof Presentable)
-            ? $this->value->toString()
-            : serialize($this->value);
+        return ($this->getValue() instanceof Presentable)
+            ? $this->getValue()->toString()
+            : json_encode($this->getValue());
     }
 
     /**
