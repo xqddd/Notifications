@@ -13,21 +13,28 @@ interface NotificationInterface
     /**
      * Get the notification label
      *
-     * @return string
+     * @return Label
      */
     public function getLabel();
 
     /**
      * Get the notification type
      *
-     * @return string
+     * @return Type
      */
     public function getType();
 
     /**
      * Get the notification message
      *
-     * @return string
+     * @return Message
      */
     public function getMessage();
+
+    /**
+     * Get the notification message
+     *
+     * @return Context
+     */
+    public function getContext();
 }

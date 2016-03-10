@@ -149,12 +149,12 @@ class Notification implements NotificationInterface, Presentable
         );
     }
 
-	/**
+    /**
      * Get the notification formatted as an array
      *
      * @param bool $assoc
-	 * @return array
-	 */
+     * @return array
+     */
     public function toArray($assoc = true)
     {
         return array_merge(
@@ -214,11 +214,11 @@ class Notification implements NotificationInterface, Presentable
     /**
      * Get the notification formatted as a JSON string, by using a custom data structure
      *
-	 * @param string $structure
+     * @param string $structure
      * @param bool $assoc
      * @param int $options
-	 * @return string
-	 */
+     * @return string
+     */
     public function toJson($options = 0, $structure = 'shortArray', $assoc = true)
     {
         return json_encode(

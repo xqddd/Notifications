@@ -147,12 +147,12 @@ class NotificationHub
      */
     public function clearAll()
     {
-        /*	
-         * Free the memory	
+        /*
+         * Free the memory
          */
         unset($this->notificationCollections);
-        /*	
-         * Reset the array	
+        /*
+         * Reset the array
          */
         $this->notificationCollections = [];
     }
