@@ -134,9 +134,9 @@ class NotificationHub
              */
             foreach ($notificationCollection as $label => $notification) {
                 $this->logger->log(
-                    $notification->getType(),
-                    $group . ' ' . $notification,
-                    $notification->toArray()
+                    $notification->getType()->toString(),
+                    $group . ' ' . $notification->toString(),
+                    $notification->getContext()->toArray()
                 );
             }
         }

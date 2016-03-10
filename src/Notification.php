@@ -32,17 +32,24 @@ class Notification implements NotificationInterface, Presentable
     protected $type;
 
     /**
+     * @var Context
+     */
+    protected $context;
+
+    /**
      * Notification constructor.
      *
      * @param Label $label
      * @param Type $type
      * @param Message $message
+     * @param Context $context
      */
-    public function __construct(Label $label, Message $message, Type $type)
+    public function __construct(Label $label, Message $message, Type $type, Context $context)
     {
         $this->setLabel($label);
         $this->setMessage($message);
         $this->setType($type);
+        $this->setContext($context);
     }
 
     /**
@@ -107,6 +114,26 @@ class Notification implements NotificationInterface, Presentable
     }
 
     /**
+     * Get the notification context
+     *
+     * @return Context
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * Set the notification context
+     *
+     * @param Context $context
+     */
+    protected function setContext(Context $context)
+    {
+        $this->context = $context;
+    }
+
+    /**
      * Get the notification formatted as a string
      *
      * @return string
@@ -114,12 +141,11 @@ class Notification implements NotificationInterface, Presentable
     public function toString()
     {
         return sprintf(
-            '[%s]: [[%s]] - [%s]',
-            [
-                ucfirst($this->getType()->toString()),
-                $this->getLabel()->toString(),
-                $this->getMessage()->toString()
-            ]
+            '%s: [%s] - %s - {%s}',
+            ucfirst($this->getType()->toString()),
+            $this->getLabel()->toString(),
+            $this->getMessage()->toString(),
+            $this->getContext()->toString()
         );
     }
 
@@ -134,7 +160,8 @@ class Notification implements NotificationInterface, Presentable
         return array_merge(
             $this->getLabel()->toArray($assoc),
             $this->getMessage()->toArray($assoc),
-            $this->getType()->toArray($assoc)
+            $this->getType()->toArray($assoc),
+            $this->getContext()->toArray($assoc)
         );
     }
 

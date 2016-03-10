@@ -15,11 +15,12 @@ class Critical extends Notification
      *
      * @param Label $label
      * @param Message $message
+     * @param Context $context
      */
-    public function __construct(Label $label, Message $message)
+    public function __construct(Label $label, Message $message, Context $context)
     {
         $type = new Type(TypeList::CRITICAL);
 
-        parent::__construct($label, $message, $type);
+        parent::__construct($label, $message, $type, $context);
     }
 }
