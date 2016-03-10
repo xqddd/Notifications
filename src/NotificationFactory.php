@@ -1,6 +1,7 @@
 <?php
 namespace Xqddd\Notifications;
 
+use Xqddd\Notifications\Exceptions\InvalidNotificationContextException;
 use Xqddd\Notifications\Exceptions\InvalidNotificationLabelException;
 use Xqddd\Notifications\Exceptions\InvalidNotificationMessageException;
 use Xqddd\Notifications\Exceptions\InvalidNotificationTypeException;
@@ -20,15 +21,17 @@ class NotificationFactory
      * @param string $labelValue
      * @param string $messageValue
      * @param string $typeValue
+     * @param $contextValue
      * @return Notification
      */
-    public function build($labelValue, $messageValue, $typeValue = 'notification')
+    public function build($labelValue, $messageValue, $typeValue = 'notification', $contextValue = null)
     {
         $label = $this->buildLabel($labelValue);
         $message = $this->buildMessage($messageValue);
         $type = $this->buildType($typeValue);
+        $context = $this->buildContext($contextValue);
 
-        return new Notification($label, $message, $type);
+        return new Notification($label, $message, $type, $context);
     }
 
     /**
@@ -36,14 +39,16 @@ class NotificationFactory
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Debug
      */
-    public function buildDebug($labelValue, $messageValue)
+    public function buildDebug($labelValue, $messageValue, $contextValue = null)
     {
         $label = $this->buildLabel($labelValue);
         $message = $this->buildMessage($messageValue);
+        $context = $this->buildContext($contextValue);
         
-        return new Debug($label, $message);
+        return new Debug($label, $message, $context);
     }
 
 
@@ -52,14 +57,16 @@ class NotificationFactory
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Info
      */
-    public function buildInfo($labelValue, $messageValue)
+    public function buildInfo($labelValue, $messageValue, $contextValue = null)
     {
         $label = $this->buildLabel($labelValue);
         $message = $this->buildMessage($messageValue);
+        $context = $this->buildContext($contextValue);
 
-        return new Info($label, $message);
+        return new Info($label, $message, $context);
     }
 
     /**
@@ -67,14 +74,16 @@ class NotificationFactory
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Notice
      */
-    public function buildNotice($labelValue, $messageValue)
+    public function buildNotice($labelValue, $messageValue, $contextValue = null)
     {
         $label = $this->buildLabel($labelValue);
         $message = $this->buildMessage($messageValue);
+        $context = $this->buildContext($contextValue);
 
-        return new Notice($label, $message);
+        return new Notice($label, $message, $context);
     }
 
     /**
@@ -82,14 +91,16 @@ class NotificationFactory
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Warning
      */
-    public function buildWarning($labelValue, $messageValue)
+    public function buildWarning($labelValue, $messageValue, $contextValue = null)
     {
         $label = $this->buildLabel($labelValue);
         $message = $this->buildMessage($messageValue);
+        $context = $this->buildContext($contextValue);
 
-        return new Warning($label, $message);
+        return new Warning($label, $message, $context);
     }
 
     /**
@@ -97,14 +108,16 @@ class NotificationFactory
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Error
      */
-    public function buildError($labelValue, $messageValue)
+    public function buildError($labelValue, $messageValue, $contextValue = null)
     {
         $label = $this->buildLabel($labelValue);
         $message = $this->buildMessage($messageValue);
+        $context = $this->buildContext($contextValue);
 
-        return new Error($label, $message);
+        return new Error($label, $message, $context);
     }
 
     /**
@@ -112,14 +125,16 @@ class NotificationFactory
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Critical
      */
-    public function buildCritical($labelValue, $messageValue)
+    public function buildCritical($labelValue, $messageValue, $contextValue = null)
     {
         $label = $this->buildLabel($labelValue);
         $message = $this->buildMessage($messageValue);
+        $context = $this->buildContext($contextValue);
 
-        return new Critical($label, $message);
+        return new Critical($label, $message, $context);
     }
 
     /**
@@ -127,14 +142,16 @@ class NotificationFactory
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Alert
      */
-    public function buildAlert($labelValue, $messageValue)
+    public function buildAlert($labelValue, $messageValue, $contextValue = null)
     {
         $label = $this->buildLabel($labelValue);
         $message = $this->buildMessage($messageValue);
+        $context = $this->buildContext($contextValue);
 
-        return new Alert($label, $message);
+        return new Alert($label, $message, $context);
     }
 
     /**
@@ -142,14 +159,16 @@ class NotificationFactory
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Emergency
      */
-    public function buildEmergency($labelValue, $messageValue)
+    public function buildEmergency($labelValue, $messageValue, $contextValue = null)
     {
         $label = $this->buildLabel($labelValue);
         $message = $this->buildMessage($messageValue);
+        $context = $this->buildContext($contextValue);
 
-        return new Emergency($label, $message);
+        return new Emergency($label, $message, $context);
     }
 
     /**
@@ -206,4 +225,21 @@ class NotificationFactory
         return $message;
     }
 
+    /**
+     * Build a notification context
+     *
+     * @param mixed $contextValue
+     * @return Context
+     */
+    protected function buildContext($contextValue)
+    {
+        try {
+            $context = new Context($contextValue);
+        } catch (InvalidNotificationContextException $e) {
+            /*
+             * @todo handle this case
+             */
+        }
+        return $context;
+    }
 }

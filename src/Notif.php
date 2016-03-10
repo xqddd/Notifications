@@ -30,13 +30,14 @@ class Notif
      * Build a Notification
      *
      * @param $labelValue
-     * @param $typeValue
      * @param $messageValue
+     * @param $typeValue
+     * @param $contextValue
      * @return Notification
      */
-    public static function build($labelValue, $typeValue, $messageValue)
+    public static function build($labelValue, $messageValue, $typeValue, $contextValue = null)
     {
-        return static::getNotificationFactory()->build($labelValue, $typeValue, $messageValue);
+        return static::getNotificationFactory()->build($labelValue, $messageValue, $typeValue, $contextValue);
     }
 
 
@@ -45,11 +46,12 @@ class Notif
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Debug
      */
-    public static function debug($labelValue, $messageValue)
+    public static function debug($labelValue, $messageValue, $contextValue = null)
     {
-        return static::getNotificationFactory()->buildDebug($labelValue, $messageValue);
+        return static::getNotificationFactory()->buildDebug($labelValue, $messageValue, $contextValue);
     }
 
 
@@ -58,11 +60,12 @@ class Notif
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Info
      */
-    public static function info($labelValue, $messageValue)
+    public static function info($labelValue, $messageValue, $contextValue = null)
     {
-        return static::getNotificationFactory()->buildInfo($labelValue, $messageValue);
+        return static::getNotificationFactory()->buildInfo($labelValue, $messageValue, $contextValue);
     }
 
     /**
@@ -70,11 +73,12 @@ class Notif
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Notice
      */
-    public static function notice($labelValue, $messageValue)
+    public static function notice($labelValue, $messageValue, $contextValue = null)
     {
-        return static::getNotificationFactory()->buildNotice($labelValue, $messageValue);
+        return static::getNotificationFactory()->buildNotice($labelValue, $messageValue, $contextValue);
     }
 
     /**
@@ -82,11 +86,12 @@ class Notif
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Warning
      */
-    public static function warning($labelValue, $messageValue)
+    public static function warning($labelValue, $messageValue, $contextValue = null)
     {
-        return static::getNotificationFactory()->buildWarning($labelValue, $messageValue);
+        return static::getNotificationFactory()->buildWarning($labelValue, $messageValue, $contextValue);
     }
 
     /**
@@ -94,11 +99,12 @@ class Notif
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Error
      */
-    public static function error($labelValue, $messageValue)
+    public static function error($labelValue, $messageValue, $contextValue = null)
     {
-        return static::getNotificationFactory()->buildError($labelValue, $messageValue);
+        return static::getNotificationFactory()->buildError($labelValue, $messageValue, $contextValue);
     }
 
     /**
@@ -106,11 +112,12 @@ class Notif
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Critical
      */
-    public static function critical($labelValue, $messageValue)
+    public static function critical($labelValue, $messageValue, $contextValue = null)
     {
-        return static::getNotificationFactory()->buildCritical($labelValue, $messageValue);
+        return static::getNotificationFactory()->buildCritical($labelValue, $messageValue, $contextValue);
     }
 
     /**
@@ -118,11 +125,12 @@ class Notif
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Alert
      */
-    public static function alert($labelValue, $messageValue)
+    public static function alert($labelValue, $messageValue, $contextValue = null)
     {
-        return static::getNotificationFactory()->buildAlert($labelValue, $messageValue);
+        return static::getNotificationFactory()->buildAlert($labelValue, $messageValue, $contextValue);
     }
 
     /**
@@ -130,10 +138,11 @@ class Notif
      *
      * @param $labelValue
      * @param $messageValue
+     * @param $contextValue
      * @return Emergency
      */
-    public static function emergency($labelValue, $messageValue)
+    public static function emergency($labelValue, $messageValue, $contextValue = null)
     {
-        return static::getNotificationFactory()->buildEmergency($labelValue, $messageValue);
+        return static::getNotificationFactory()->buildEmergency($labelValue, $messageValue, $contextValue);
     }
 }
