@@ -1,5 +1,6 @@
 <?php
 namespace Xqddd\Notifications;
+use Xqddd\Presentable\Presentable;
 
 /**
  * Notification class

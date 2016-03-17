@@ -2,6 +2,8 @@
 namespace Xqddd\Notifications;
 
 use Xqddd\Notifications\Exceptions\InvalidNotificationContextException;
+use Xqddd\Presentable\Presentable;
+use Xqddd\Presentable\PresentableTrait;
 
 /**
  * Notification Context attribute class

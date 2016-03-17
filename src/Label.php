@@ -2,6 +2,8 @@
 namespace Xqddd\Notifications;
 
 use Xqddd\Notifications\Exceptions\InvalidNotificationLabelException;
+use Xqddd\Presentable\Presentable;
+use Xqddd\Presentable\PresentableTrait;
 
 /**
  * Notification Label attribute class

@@ -12,7 +12,8 @@
     "require": {
         "php": ">=5.4.0",
         "psr/log": "1.*",
-        "xqddd/exceptions": "0.*"
+        "xqddd/exceptions": "0.*",
+        "xqddd/presentable": "1.*"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*"

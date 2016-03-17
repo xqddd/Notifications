@@ -2,8 +2,8 @@
 namespace Xqddd\Notifications;
 
 use Xqddd\Notifications\Exceptions\InvalidNotificationTypeException;
-use Xqddd\Notifications\Exceptions\NotificationTypeDomainException;
-use Xqddd\Notifications\Exceptions\TypeList;
+use Xqddd\Presentable\Presentable;
+use Xqddd\Presentable\PresentableTrait;
 
 /**
  * Notification Type attribute class

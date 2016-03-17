@@ -2,6 +2,8 @@
 namespace Xqddd\Notifications;
 
 use Xqddd\Notifications\Exceptions\InvalidNotificationMessageException;
+use Xqddd\Presentable\Presentable;
+use Xqddd\Presentable\PresentableTrait;
 
 /**
  * Notification Message attribute class

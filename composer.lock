@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "123910c3d5097f442d165795066a3f6e",
-    "content-hash": "b472b97b8a2a087e3b36bf2a2fb6595d",
+    "hash": "d0159a1d96670ca1c9629543ca1ce271",
+    "content-hash": "c55a31c87a1fa50cb2b9342a4967be88",
     "packages": [
         {
             "name": "psr/log",
@@ -84,6 +84,46 @@
             ],
             "description": "A small library with classes extending the PHP exceptions by adding additional parameters for custom use.",
             "time": "2016-01-29 22:11:45"
+        },
+        {
+            "name": "xqddd/presentable",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/xqddd/Presentable.git",
+                "reference": "995e55d2aa81467382272eddbf5df6a589439d7b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/xqddd/Presentable/zipball/995e55d2aa81467382272eddbf5df6a589439d7b",
+                "reference": "995e55d2aa81467382272eddbf5df6a589439d7b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.9.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Xqddd\\Presentable\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Andrei Pirjoleanu",
+                    "email": "andreipirjoleanu@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP Presentable interface for outputting different sets and types of data",
+            "time": "2016-03-17 11:28:42"
         }
     ],
     "packages-dev": [
