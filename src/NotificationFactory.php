@@ -1,11 +1,6 @@
 <?php
 namespace Xqddd\Notifications;
 
-use Xqddd\Notifications\Exceptions\InvalidNotificationContextException;
-use Xqddd\Notifications\Exceptions\InvalidNotificationLabelException;
-use Xqddd\Notifications\Exceptions\InvalidNotificationMessageException;
-use Xqddd\Notifications\Exceptions\InvalidNotificationTypeException;
-
 /**
  * Notification Factory class
  *
@@ -179,14 +174,7 @@ class NotificationFactory
      */
     protected function buildLabel($labelValue)
     {
-        try {
-            $label = new Label($labelValue);
-        } catch (InvalidNotificationLabelException $e) {
-            /*
-             * @todo handle this case
-             */
-        }
-        return $label;
+        return new Label($labelValue);
     }
 
     /**
@@ -197,14 +185,7 @@ class NotificationFactory
      */
     protected function buildType($typeValue)
     {
-        try {
-            $type = new Type($typeValue);
-        } catch (InvalidNotificationTypeException $e) {
-            /*
-             * @todo handle this case
-             */
-        }
-        return $type;
+        return new Type($typeValue);
     }
 
     /**
@@ -215,14 +196,7 @@ class NotificationFactory
      */
     protected function buildMessage($messageValue)
     {
-        try {
-            $message = new Message($messageValue);
-        } catch (InvalidNotificationMessageException $e) {
-            /*
-             * @todo handle this case
-             */
-        }
-        return $message;
+        return new Message($messageValue);
     }
 
     /**
@@ -233,13 +207,6 @@ class NotificationFactory
      */
     protected function buildContext($contextValue)
     {
-        try {
-            $context = new Context($contextValue);
-        } catch (InvalidNotificationContextException $e) {
-            /*
-             * @todo handle this case
-             */
-        }
-        return $context;
+        return new Context($contextValue);
     }
 }
