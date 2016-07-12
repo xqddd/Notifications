@@ -41,7 +41,7 @@ class Context implements Presentable
      */
     protected function validateValue($value)
     {
-        if (!is_object($value)) {
+        if (!is_null($value) && !is_object($value)) {
             throw new InvalidNotificationContextException(
                 'context',
                 'object',
